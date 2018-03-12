@@ -6,6 +6,7 @@ import os.path
 from collections import namedtuple
 from pathlib import Path
 import time
+import json
 
 sys.path.append("/usr/local/lib/python3.6/dist-packages/electrum")
 
@@ -37,6 +38,19 @@ def sign(wid, wdir = ""):
 	print(sgnd)
 	#return sgnd
 
+def load(fname):
+	if os.path.isfile(fname):
+		with open(fname, 'r') as content_file:
+			return content_file.read()
+	else:
+		return None
+
+def save(fname, text):
+	fout = open(fname, "w")
+	res = fout.write(text)
+	fout.close()
+	return res
+
 def run(args):
 	return subprocess.run(args, stdout=subprocess.PIPE)
 
@@ -64,9 +78,9 @@ def create_seed():
 	global conf
 	res = run([conf.binary_cmd, "make_seed"])
 	if (res.returncode == 0):
-		seed = str(res.stdout[0:-1])
-		seed = seed[2:-1]
-		return seed
+		seed = res.stdout.decode("utf-8") #str(res.stdout[0:-1])
+		#seed = seed[2:-1]
+		return seed.replace("\n","")
 	else:
 		return ""
 
@@ -87,8 +101,8 @@ def get_mpk(wid, wdir = ""):
 	global conf
 	res = run([conf.binary_cmd, "getmpk", "-w", get_full_wpath(wid, wdir)])
 	if (res.returncode == 0):
-		mpk = str(res.stdout)
-		return mpk[2:-3]
+		mpk = res.stdout.decode("utf-8")
+		return mpk.replace("\n","")#mpk[2:-3]
 	else:
 		return ""
 
@@ -98,9 +112,7 @@ def sign_transaction(unsigned_txn, wid, pwd = None, wdir = ""):
 		usg_path = unsigned_txn
 	else:
 		usg_path = get_full_wpath(wid, wdir, True) + "/temp_unsigned.txn"
-		temp_usg = open(usg_path, "w")
-		temp_usg.write(unsigned_txn)
-		temp_usg.close()	
+		save(usg_path, unsigned_txn)	
 
 	sgn_path = get_full_wpath(wid, wdir, True) + "/temp_signed.txn"
 	comm = ['cat', usg_path, '|', 'elefork','signtransaction', '-w', get_full_wpath(wid, wdir)]
@@ -118,13 +130,52 @@ def sign_transaction(unsigned_txn, wid, pwd = None, wdir = ""):
 	cat = subprocess.Popen(comm, shell=True, stdout=subprocess.PIPE).communicate()
 
 	timeout = 10
-	while (not os.path.isfile(sgn_path)) and (timeout>0):
+	while (load(sgn_path) == None) and (timeout>0):
 		time.sleep(0.1)
 		timeout = timeout - 0.1
 
 	if timeout > 0:
-		with open(sgn_path, 'r') as content_sgn:
-			temp_sgn = content_sgn.read()
-		return temp_sgn
+		return load(sgn_path)
 	else:
 		return -1
+
+def hex2json(hexdata):
+	if os.path.isfile(hexdata):
+		usg = load(hexdata)
+	else:
+		usg = hexdata
+	ret = run(['elefork', 'deserialize', usg]).stdout.decode("utf-8")
+	return ret
+
+def is_my_addr(addr, wid, wdir = ""):
+	res = run(['elefork', 'ismine', '-w', get_full_wpath(wid, wdir), addr]).stdout.decode("utf-8").replace("\n","")
+	result = True if res.lower() == "True".lower() else False
+	return result
+
+def verify_transaction(unsigned_txn, wid, wdir = ""):
+	txn_json = hex2json(unsigned_txn)
+	#print(txn_json)
+	#txn_json = unsigned_txn
+	txn = json.loads(txn_json)
+
+	foreign_inputs = 0
+	payers = []
+	for inp in txn['inputs']:
+		addr = inp['address']
+		payers.append(addr)
+		if not is_my_addr(addr, wid, wdir):
+			foreign_inputs += 1
+
+	payees = []
+	total = 0
+	back = 0			
+	for out in txn['outputs']:
+		addr = out['address']
+		total += out['value']
+		if is_my_addr(addr, wid, wdir):
+			back += out['value']
+		else:
+			payees.append(addr)
+
+	ammount = total - back
+	return {"payees" : payees, "ammount_no_fee": ammount, "foreign_inputs": foreign_inputs, "total_out": total, "payers:" : payers}
