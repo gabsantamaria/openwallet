@@ -106,7 +106,7 @@ encryption_pwd = None
 # get password routine
 def prompt_password(prompt, confirm=True):
     import getpass
-    print("nohalogaaaaaaaaabi")
+    #print("holatu")
     #if encryption_pwd != None:
     return encryption_pwd
     password = getpass.getpass(prompt, stream=None)
