@@ -8,7 +8,7 @@ from pathlib import Path
 import time
 import json
 
-sys.path.append("/usr/local/lib/python3.6/dist-packages/electrum")
+#sys.path.append("/usr/local/lib/python3.6/dist-packages/electrum")
 
 from electrum.wallet import Wallet, Imported_Wallet
 from electrum.commands import get_parser, known_commands, Commands, config_variables
@@ -22,21 +22,21 @@ from electrum import SimpleConfig, Network
 Config = namedtuple('Config', 'binary_cmd, default_wdir, max_wid')
 conf = Config("elefork", str(Path(os.getcwd()).parents[1]), 100)
 
-def sign(wid, wdir = ""):
-	tx = """{
-    "final": true,
-    "hex": "010000000110c5d3408e11dc7d1327f3f2e0e789cce8c578209ed053ddf0a7285a48464811010000005701ff4c53ff0488b21e00000000000000000072206531a8760a41dca79069867623438f731ca96c7638e74ddfb5f6e1e64840027d186e91738ad1d8e4bec6ecf35095022b5d8cc131cb5d0b3794680b84f8dcc700000000feffffff0250c30000000000001976a914169bef354fd03ed4ae370a733389d58bd6a9dbf988ac54e60100000000001976a914d97c68e0a9619e7d53d6f8bb0bd7f7d34ffbe33b88ac92d40700",
-    "complete": false
-	}"""
-	#tx = Transaction(tx)
-	wpath = get_full_wpath(wid, wdir)
-	ws = WalletStorage(wpath)
-	wallet = Imported_Wallet(ws)
-	cmd = Commands(SimpleConfig(), wallet, None)
-	sgnd = cmd.signtransaction(tx, None, "1520")
-	#wallet.sign_transaction(tx, password)
-	print(sgnd)
-	#return sgnd
+# def sign(wid, wdir = ""):
+# 	tx = """{
+#     "final": true,
+#     "hex": "010000000110c5d3408e11dc7d1327f3f2e0e789cce8c578209ed053ddf0a7285a48464811010000005701ff4c53ff0488b21e00000000000000000072206531a8760a41dca79069867623438f731ca96c7638e74ddfb5f6e1e64840027d186e91738ad1d8e4bec6ecf35095022b5d8cc131cb5d0b3794680b84f8dcc700000000feffffff0250c30000000000001976a914169bef354fd03ed4ae370a733389d58bd6a9dbf988ac54e60100000000001976a914d97c68e0a9619e7d53d6f8bb0bd7f7d34ffbe33b88ac92d40700",
+#     "complete": false
+# 	}"""
+# 	#tx = Transaction(tx)
+# 	wpath = get_full_wpath(wid, wdir)
+# 	ws = WalletStorage(wpath)
+# 	wallet = Imported_Wallet(ws)
+# 	cmd = Commands(SimpleConfig(), wallet, None)
+# 	sgnd = cmd.signtransaction(tx, None, "1520")
+# 	#wallet.sign_transaction(tx, password)
+# 	print(sgnd)
+# 	#return sgnd
 
 def load(fname):
 	if os.path.isfile(fname):
