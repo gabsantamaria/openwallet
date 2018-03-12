@@ -106,6 +106,9 @@ encryption_pwd = None
 # get password routine
 def prompt_password(prompt, confirm=True):
     import getpass
+    print("nohalogaaaaaaaaabi")
+    #if encryption_pwd != None:
+    return encryption_pwd
     password = getpass.getpass(prompt, stream=None)
     if password and confirm:
         password2 = getpass.getpass("Confirm: ")
@@ -132,9 +135,9 @@ def run_non_RPC(config):
         #print("hihihi " + config.get('text'))
         passphrase = config.get('passphrase', '')
 		#!!!ATTENTION!!! Gab, you added this line to make it work!
-        password = encryption_pwd
+        #password = encryption_pwd
         	#if password == None:
-        	#	password = password_dialog() if keystore.is_private(text) else None
+        password = password_dialog() if keystore.is_private(text) else None
         if keystore.is_address_list(text):
             wallet = Imported_Wallet(storage)
             for x in text.split():
@@ -223,7 +226,6 @@ def init_cmdline(config_options, server):
     config = SimpleConfig(config_options)
     cmdname = config.get('cmd')
     cmd = known_commands[cmdname]
-
     if cmdname == 'signtransaction' and config.get('privkey'):
         cmd.requires_wallet = False
         cmd.requires_password = False
@@ -360,14 +362,18 @@ if __name__ == '__main__':
     sys.argv = list(filter(lambda x: not x.startswith('-psn'), sys.argv))
     #print("halo gab")
     #!!!ATTENTION!!! Gab, you added this line to make it work!
-    if len(sys.argv) > 1 and sys.argv[-2] == '-encpwd':
-    	encryption_pwd = sys.argv[-1]
-    	sys.argv.remove(encryption_pwd)
-    	sys.argv.remove('-encpwd')
+    if len(sys.argv) > 1 and '-encpwd' in sys.argv:
+        if sys.argv.index('-encpwd') < (len(sys.argv)-1):
+            encryption_pwd = sys.argv[sys.argv.index('-encpwd') + 1]
+            sys.argv.remove(encryption_pwd)
+            sys.argv.remove('-encpwd')
+        else:
+            encryption_pwd = None
+            sys.argv.remove('-encpwd')   
     else:
-    	encryption_pwd = None	
-    	#print("Hey!, the password is " + encryption_pwd)
-    	#print("The remaining list is: " + str(sys.argv))
+        encryption_pwd = None	
+        #print("Hey!, the password is " + encryption_pwd)
+        #print("The remaining list is: " + str(sys.argv))
 
     # old 'help' syntax
     if len(sys.argv) > 1 and sys.argv[1] == 'help':
