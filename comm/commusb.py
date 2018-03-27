@@ -56,6 +56,7 @@ def get_unsigned():
 	return wait_data("unsigned")
 
 def get_pin():
+	send_data("get", "pin", False)
 	return wait_data("pin")
 
 def send_signed(hexdata):
