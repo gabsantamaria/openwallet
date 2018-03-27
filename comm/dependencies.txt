@@ -1,1 +1,1 @@
-sudo apt-get install python-serial
+python3 -m pip install pyserial
