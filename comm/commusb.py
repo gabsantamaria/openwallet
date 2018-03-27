@@ -15,13 +15,13 @@ def send_data(header, data, wait_for_confirmation = True, timeout = 30, validate
 		#time.sleep(holdon)
 		timeout = timeout - holdon
 		if validate_data:
-                    resp = wait_data(header + "_ok", 0)
-                    if resp == data:
-                            return True
-                else:
-                    if wait_ok():
-                        return True
-		print("No right response: ", resp)
+			resp = wait_data(header + "_ok", 0)
+			if resp == data:
+				return True
+		else:
+			if wait_ok():
+				return True
+		#print("No right response: ", resp)
 		keeptrying = wait_for_confirmation and (timeout>0)
 	return False
 
