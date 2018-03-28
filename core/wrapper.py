@@ -74,6 +74,14 @@ def get_free_wid(wdir = ""):
 			return wid
 	return 0
 
+def get_num_wids(wdir = ""):
+	global conf
+	nwids = 0
+	for wid in range(1,conf.max_wid + 1):
+		if os.path.exists(get_full_wpath(wid, wdir)):
+			nwids +=1
+	return nwids
+
 def create_seed():
 	global conf
 	res = run([conf.binary_cmd, "make_seed"])
