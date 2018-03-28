@@ -45,14 +45,14 @@ def wait_ok(timeout=30):
 	return False    
 
 def send_xpub(xpub, wid, devid):
-	if send_data("hello", "hi"):
-		if send_data("xpub", xpub):
-			if send_data("wid", wid):
-				if send_data("devid", devid):
-					return True
+	if send_data("xpub", xpub):
+		if send_data("wid", wid):
+			if send_data("devid", devid):
+				return True
 	return False
 
 def get_unsigned():
+	send_data("get", "unsigned", False)
 	return wait_data("unsigned")
 
 def get_pin():
