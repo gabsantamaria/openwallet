@@ -15,7 +15,7 @@ def turn_on():
 	while core.get_num_wids() == 0:
 		#no wallets created
 		sub.create_new_wallet()
-	wids = get_list_wid()
+	wids = core.get_list_wid()
 	loaded_wid = wids[0]
 	wait_for_action()
 	sub.shut_down()
@@ -30,7 +30,7 @@ def wait_for_connection():
 	sc.waiting_connection()
 	com.connect()
 	
-	while not con.send_xpub(core.get_mpk(loaded_wid), loaded_wid, devid):
+	while not com.send_xpub(core.get_mpk(loaded_wid), loaded_wid, devid):
 		time.sleep(1)
 	sc.waiting_transaction()
 	return 0

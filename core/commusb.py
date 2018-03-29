@@ -59,21 +59,21 @@ class comm:
 		return False    
 
 	def send_xpub(self, xpub, wid, devid):
-		if send_data("xpub", xpub):
-			if send_data("wid", wid):
-				if send_data("devid", devid):
+		if self.send_data("xpub", xpub):
+			if self.send_data("wid", wid):
+				if self.send_data("devid", devid):
 					return True
 		return False
 
 	def get_unsigned(self):
-		send_data("get", "unsigned", False)
+		self.send_data("get", "unsigned", False)
 		return wait_data("unsigned")
 
 	def get_pin(self):
-		send_data("get", "pin", False)
+		self.send_data("get", "pin", False)
 		return wait_data("pin")
 
 	def send_signed(self, hexdata):
-		if send_data("signed", hexdata):
+		if self.send_data("signed", hexdata):
 			return True
 		return False
