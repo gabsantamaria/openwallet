@@ -42,7 +42,7 @@ def wait_for_connection():
 	sc.waiting_transaction(me.loaded_wid)
 
 	unsigned_txn = me.com.get_unsigned()
-	while unsigned_txn = "":
+	while unsigned_txn == "":
 		time.sleep(1)
 		unsigned_txn = me.com.get_unsigned()
 	sc.verifying_transaction()
