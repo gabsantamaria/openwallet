@@ -193,5 +193,5 @@ def verify_transaction(unsigned_txn, wid, wdir = ""):
 		else:
 			payees.append(addr)
 
-	ammount = total - back
-	return {"payees" : payees, "ammount_no_fee": ammount, "foreign_inputs": foreign_inputs, "total_out": total, "payers:" : payers}
+	amount = total - back
+	return {"payees" : payees, "amount_no_fee": amount, "foreign_inputs": foreign_inputs, "total_out": total, "payers:" : payers}

@@ -32,7 +32,7 @@ class comm:
 			#time.sleep(self.holdon)
 			timeout = timeout - self.holdon
 			if validate_data:
-				resp = wait_data(header + "_ok", 0)
+				resp = self.wait_data(header + "_ok", 0)
 				if resp == str(data):
 					return True
 			else:
@@ -70,11 +70,11 @@ class comm:
 
 	def get_unsigned(self):
 		self.send_data("get", "unsigned", False)
-		return wait_data("unsigned")
+		return self.wait_data("unsigned")
 
 	def get_pin(self):
 		self.send_data("get", "pin", False)
-		return wait_data("pin")
+		return self.wait_data("pin")
 
 	def send_signed(self, hexdata):
 		if self.send_data("signed", hexdata):

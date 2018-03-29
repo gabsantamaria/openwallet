@@ -112,5 +112,25 @@ def waiting_transaction(loaded_wid = ""):
 def input_pin():
 	return 0
 
-def transaction_info():
+def verifying_transaction(loaded_wid = ""):
+	clear_disp()
+	write_text("Transaction received", top)
+	write_text("Verifying...", top + 16)
+	write_text("Please wait...", top + 25)
+	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	return 0
+
+def invalid_transaction(loaded_wid = ""):
+	clear_disp()
+	write_text("Invalid transaction", top + 16)
+	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	return 0
+
+def transaction_info(payee_addr, amount):
+	clear_disp()
+	write_text("Pay to:", top)
+	write_text(str(payee_addr), to + 16)
+	write_text(str(int(str(amount))/100000) + " mBTC", to + 34)
+	write_text("Accept with PIN", to + 43)
+	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	return 0
