@@ -4,11 +4,15 @@ import wrapper as core
 from commusb import comm
 import time
 
-com = comm()
-loaded_wid = None
-devid = "naf7asfd4f9dg"
+class Me:
+	pass
+me = Me()
+
+me.loaded_wid = None
+me.devid = "naf7asfd4f9dg"
 
 def turn_on():
+	me.com = comm()
 	sc.initialize()
 	sc.initializing()
 	sub.init_on_firsttime()
@@ -16,7 +20,7 @@ def turn_on():
 		#no wallets created
 		sub.create_new_wallet()
 	wids = core.get_list_wid()
-	loaded_wid = wids[0]
+	me.loaded_wid = wids[0]
 	wait_for_action()
 	sub.shut_down()
 	return 0
@@ -27,10 +31,10 @@ def wait_for_action():
 	return 0
 
 def wait_for_connection():
-	sc.waiting_connection(loaded_wid)
-	com.connect()
+	sc.waiting_connection(me.loaded_wid)
+	me.com.connect()
 	
-	while not com.send_xpub(core.get_mpk(loaded_wid), loaded_wid, devid):
+	while not me.com.send_xpub(core.get_mpk(me.loaded_wid), me.loaded_wid, me.devid):
 		time.sleep(1)
 	sc.waiting_transaction()
 	return 0
