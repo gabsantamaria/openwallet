@@ -29,7 +29,7 @@ def turn_on():
 
 def wait_for_action():
 	#TODO wait also for actions like creating or deleting wallets
-	while true:
+	while True:
 		wait_for_connection()
 	return 0
 
