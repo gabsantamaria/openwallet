@@ -95,6 +95,11 @@ def waiting_connection(loaded_wid = ""):
 	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	return 0
 
+def connecting(loaded_wid = ""):
+	clear_disp()
+	write_text("connecting...", top + 16)
+	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	return 0
 
 def waiting_transaction(loaded_wid = ""):
 	clear_disp()

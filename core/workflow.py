@@ -33,10 +33,11 @@ def wait_for_action():
 def wait_for_connection():
 	sc.waiting_connection(me.loaded_wid)
 	me.com.connect()
-	
-	while not me.com.send_xpub(core.get_mpk(me.loaded_wid), me.loaded_wid, me.devid):
+	mpk = core.get_mpk(me.loaded_wid)
+	sc.connecting(me.loaded_wid)
+	while not me.com.send_xpub(mpk, me.loaded_wid, me.devid):
 		time.sleep(1)
-	sc.waiting_transaction()
+	sc.waiting_transaction(me.loaded_wid)
 	return 0
 
 def exchange_data():
