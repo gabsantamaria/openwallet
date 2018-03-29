@@ -33,7 +33,7 @@ class comm:
 				if resp == data:
 					return True
 			else:
-				if wait_ok():
+				if self.wait_ok():
 					return True
 			#print("No right response: ", resp)
 			keeptrying = wait_for_confirmation and (timeout>0)

@@ -89,10 +89,12 @@ def new_wallet(seed):
 	return 0
 
 def waiting_connection():
+	clear_disp()
 	write_text("Waiting for USB connection...", top + 16)
 	return 0
 
 def waiting_transaction():
+	clear_disp()
 	write_text("Connected", top + 16)
 	write_text("Waiting for transaction...", top + 25)
 	return 0
