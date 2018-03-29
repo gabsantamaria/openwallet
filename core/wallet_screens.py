@@ -129,8 +129,8 @@ def invalid_transaction(loaded_wid = ""):
 def transaction_info(payee_addr, amount):
 	clear_disp()
 	write_text("Pay to:", top)
-	write_text(str(payee_addr), to + 16)
+	write_text(str(payee_addr), top + 16)
 	write_text(str(int(str(amount))/100000) + " mBTC", top + 34)
-	write_text("Accept with PIN", to + 43)
+	write_text("Accept with PIN", top + 43)
 	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	return 0
