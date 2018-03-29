@@ -23,7 +23,10 @@ class comm:
 		keeptrying = True
 		payload = header + ":" + str(data) + "\n"
 		while keeptrying:
-			self.port.write(payload.encode())
+			try:
+				self.port.write(payload.encode())
+			except:
+				return False
 			if not wait_for_confirmation:
 				return True
 			#time.sleep(self.holdon)

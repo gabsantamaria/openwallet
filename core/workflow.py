@@ -10,6 +10,7 @@ me = Me()
 
 me.loaded_wid = None
 me.devid = "naf7asfd4f9dg"
+me.loaded_xpub = None
 
 def turn_on():
 	me.com = comm()
@@ -21,6 +22,7 @@ def turn_on():
 		sub.create_new_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
+	me.loaded_xpub = core.get_mpk(me.loaded_wid)
 	wait_for_action()
 	sub.shut_down()
 	return 0
@@ -33,9 +35,8 @@ def wait_for_action():
 def wait_for_connection():
 	sc.waiting_connection(me.loaded_wid)
 	me.com.connect()
-	mpk = core.get_mpk(me.loaded_wid)
-	sc.connecting(me.loaded_wid)
-	while not me.com.send_xpub(mpk, me.loaded_wid, me.devid):
+	#sc.connecting(me.loaded_wid)
+	while not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
 		time.sleep(1)
 	sc.waiting_transaction(me.loaded_wid)
 	return 0
