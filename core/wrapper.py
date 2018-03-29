@@ -74,6 +74,14 @@ def get_free_wid(wdir = ""):
 			return wid
 	return 0
 
+def get_list_wid(wdir = ""):
+	global conf
+	wids = []
+	for wid in range(1,conf.max_wid + 1):
+		if os.path.exists(get_full_wpath(wid, wdir)):
+			wids.append(wid)
+	return wids
+
 def get_num_wids(wdir = ""):
 	global conf
 	nwids = 0

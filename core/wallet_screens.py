@@ -90,13 +90,16 @@ def new_wallet(seed):
 
 def waiting_connection():
 	clear_disp()
-	write_text("Waiting for USB connection...", top + 16)
+	write_text("Waiting for USB", top + 16)
+	write_text("connection...", top + 25)
 	return 0
+
 
 def waiting_transaction():
 	clear_disp()
-	write_text("Connected", top + 16)
-	write_text("Waiting for transaction...", top + 25)
+	write_text("Connected", top)
+	write_text("Waiting for", top + 16)
+	write_text("transaction...", top + 25)
 	return 0
 
 def input_pin():
