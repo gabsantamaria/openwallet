@@ -1,7 +1,9 @@
 import wallet_screens as sc
 import wallet_subs as sub
 import wrapper as core
-import commusb as com
+from commusb import comm
+
+com = comm()
 
 def turn_on():
 	sc.initialize()
@@ -21,7 +23,7 @@ def wait_for_action():
 
 def wait_for_connection():
 	sc.waiting_connection()
-	com.initialize()
+	com.connect()
 	return 0
 
 def exchange_data():
