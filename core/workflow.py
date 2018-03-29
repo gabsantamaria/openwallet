@@ -27,7 +27,7 @@ def wait_for_action():
 	return 0
 
 def wait_for_connection():
-	sc.waiting_connection()
+	sc.waiting_connection(loaded_wid)
 	com.connect()
 	
 	while not com.send_xpub(core.get_mpk(loaded_wid), loaded_wid, devid):

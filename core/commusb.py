@@ -21,7 +21,7 @@ class comm:
 
 	def send_data(self, header, data, wait_for_confirmation = True, timeout = 30, validate_data = False):
 		keeptrying = True
-		payload = header + ":" + data + "\n"
+		payload = header + ":" + str(data) + "\n"
 		while keeptrying:
 			self.port.write(payload.encode())
 			if not wait_for_confirmation:
@@ -30,7 +30,7 @@ class comm:
 			timeout = timeout - self.holdon
 			if validate_data:
 				resp = wait_data(header + "_ok", 0)
-				if resp == data:
+				if resp == str(data):
 					return True
 			else:
 				if self.wait_ok():
