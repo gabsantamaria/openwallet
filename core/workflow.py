@@ -57,7 +57,7 @@ def wait_for_connection():
 		print("Invalid txn. Recall foreign inputs and multiple payees are not allowed")
 		sc.invalid_transaction(me.loaded_wid)
 		return False
-	sc.transaction_info(payees[0], amount)
+	sc.transaction_info(payees[0], amount, me.loaded_wid)
 	time.sleep(10)
 	return 0
 
