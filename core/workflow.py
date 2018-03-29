@@ -45,7 +45,7 @@ def wait_for_connection():
 	while unsigned_txn == "":
 		time.sleep(1)
 		unsigned_txn = me.com.get_unsigned()
-	sc.verifying_transaction()
+	sc.verifying_transaction(me.loaded_wid)
 	txn_info = core.verify_transaction(unsigned_txn, me.loaded_wid)
 	print(txn_info)
 	payees = txn_info['payees']
