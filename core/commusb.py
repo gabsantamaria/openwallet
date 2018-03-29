@@ -1,6 +1,6 @@
 import serial
 import time
-#port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
+#self.port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
 class comm:
 
@@ -23,7 +23,7 @@ class comm:
 		keeptrying = True
 		payload = header + ":" + data + "\n"
 		while keeptrying:
-			port.write(payload.encode())
+			self.port.write(payload.encode())
 			if not wait_for_confirmation:
 				return True
 			#time.sleep(self.holdon)
@@ -41,7 +41,7 @@ class comm:
 
 	def wait_data(self, header, timeout=30):
 		while timeout>=0:
-			line = port.readline().decode("utf-8").replace("\n","")
+			line = self.port.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			indx = line.find(":")
 			if indx >= 0 and line[0:indx]==header:
@@ -51,7 +51,7 @@ class comm:
 	    
 	def wait_ok(self, timeout=30):
 		while timeout>=0:
-			line = port.readline().decode("utf-8").replace("\n","")
+			line = self.port.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			if line == "ok":
 				return True
