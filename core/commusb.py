@@ -68,11 +68,15 @@ class comm:
 		return False    
 
 	def send_xpub(self, xpub, wid, devid):
-		if self.send_data("xpub", xpub):
-			if self.send_data("wid", wid):
-				if self.send_data("devid", devid):
-					return True
-		return False
+		try:
+			if self.send_data("xpub", xpub, timeout=5):
+				if self.send_data("wid", wid, timeout=5):
+					if self.send_data("devid", devid, timeout=5):
+						return True
+			return False
+		except:
+			return False
+		
 
 	def get_unsigned(self):
 		self.send_data("get", "unsigned", False)
