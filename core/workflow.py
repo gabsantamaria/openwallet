@@ -63,7 +63,7 @@ def wait_for_connection():
 	signed_txn = -1
 	trials_left = 3
 	scrambled = [0,1,2,3,4,5,6,7,8,9]
-	print("original scrambled: ", scrambled)
+	#print("original scrambled: ", scrambled)
 	while signed_txn == -1 and trials_left > 0:
 		random.shuffle(scrambled)
 		print("now scrambled: ", scrambled)
