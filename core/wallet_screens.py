@@ -146,8 +146,8 @@ def transaction_info(payee_addr, amount, loaded_wid = ""):
 def scrambled_numpad(numbers):
 	clear_disp()
 	sep = "  "
-	line1 = str(numbers[1]) + sep + str(numbers[2]) + sep + str(numbers[3]) + sep + "Introduce"
-	line2 = str(numbers[4]) + sep + str(numbers[5]) + sep + str(numbers[6]) + sep + "PIN"
+	line1 = str(numbers[1]) + sep + str(numbers[2]) + sep + str(numbers[3]) + sep + "Introd."
+	line2 = str(numbers[4]) + sep + str(numbers[5]) + sep + str(numbers[6]) + sep + "  PIN"
 	line3 = str(numbers[7]) + sep + str(numbers[8]) + sep + str(numbers[9])
 	line4 = " " + sep + str(numbers[0])
 	write_text(line1, 4 + top, True)
