@@ -36,6 +36,7 @@ draw = ImageDraw.Draw(image)
 
 # Load default font.
 font = ImageFont.load_default()
+fontnumpad = ImageFont.truetype('m04.ttf',8)
 # Draw some shapes.
 # First define some constants to allow easy resizing of shapes.
 padding = -2
@@ -74,8 +75,12 @@ def initialize():
 	# font = ImageFont.truetype('Minecraftia.ttf', 8)
 	return 0
 
-def write_text(text, yval=top, xval=x):
-	draw.text((xval, yval), str(text), font=font, fill=255)
+def write_text(text, yval=top, npad = False, xval=x):
+	if npad:
+		thefont = fontnumpad
+	else:
+		thefont = font
+	draw.text((xval, yval), str(text), font=thefont, fill=255)
 	disp.image(image)
 	disp.display()
 
@@ -136,4 +141,17 @@ def transaction_info(payee_addr, amount, loaded_wid = ""):
 	write_text(str(int(str(amount))/100000) + " mBTC", top + 34)
 	write_text("Accept with PIN", top + 43)
 	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	return 0
+
+def scrambled_numpad(numbers):
+	clear_disp()
+	sep = "  "
+	line1 = str(numbers[1]) + sep + str(numbers[2]) + sep + str(numbers[3])
+	line2 = str(numbers[4]) + sep + str(numbers[5]) + sep + str(numbers[6])
+	line3 = str(numbers[7]) + sep + str(numbers[8]) + sep + str(numbers[9])
+	line4 = " " + sep + str(numbers[0])
+ 	write_text(line1, top, True)
+ 	write_text(line2, top + 16, True)
+ 	write_text(line3, top + 32, True)
+ 	write_text(line4, top + 48, True)
 	return 0

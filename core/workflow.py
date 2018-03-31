@@ -59,6 +59,8 @@ def wait_for_connection():
 		return False
 	sc.transaction_info(payees[0], amount, me.loaded_wid)
 	time.sleep(10)
+	sc.scrambled_numpad([0,1,2,3,4,5,6,7,8,9])
+	time.sleep(50)
 	return 0
 
 def exchange_data():
