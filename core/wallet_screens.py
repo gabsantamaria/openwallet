@@ -150,8 +150,8 @@ def scrambled_numpad(numbers):
 	line2 = str(numbers[4]) + sep + str(numbers[5]) + sep + str(numbers[6])
 	line3 = str(numbers[7]) + sep + str(numbers[8]) + sep + str(numbers[9])
 	line4 = " " + sep + str(numbers[0])
- 	write_text(line1, top, True)
- 	write_text(line2, top + 16, True)
- 	write_text(line3, top + 32, True)
- 	write_text(line4, top + 48, True)
+	write_text(line1, top, True)
+	write_text(line2, top + 16, True)
+	write_text(line3, top + 32, True)
+	write_text(line4, top + 48, True)
 	return 0
