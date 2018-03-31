@@ -166,6 +166,7 @@ def transaction_info(payee_addr, amount, loaded_wid = ""):
 
 def scrambled_numpad(numbers):
 	clear_disp()
+	print("numbers: ", scrambled)
 	sep = "  "
 	line1 = str(numbers[1]) + sep + str(numbers[2]) + sep + str(numbers[3]) + sep + "Introd."
 	line2 = str(numbers[4]) + sep + str(numbers[5]) + sep + str(numbers[6]) + sep + "  PIN"
