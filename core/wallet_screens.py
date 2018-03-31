@@ -132,7 +132,7 @@ def invalid_transaction(loaded_wid = ""):
 	write_text("                 exit", top + 16 + 8)
 	action = listenAB()
 	while not listenAB() == "B":
-	
+		pass
 	return True
 
 def listenAB():
