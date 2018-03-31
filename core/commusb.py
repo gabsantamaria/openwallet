@@ -10,14 +10,20 @@ class comm:
 	def connect(self):
 		try:
 			self.port = serial.Serial("/dev/ttyGS0", baudrate=9600, timeout=self.holdon)
+			return self.port
 		except serial.serialutil.SerialException:
-			self.port.close()
-			self.port.open()
-		return self.port
+			try:
+				self.port.close()
+				self.port.open()
+			except:
+				return self.port
 
 	def disconnect(self):
-		self.port.close()
-		return self.port
+		try:
+			self.port.close()
+			return self.port
+		except:
+			return self.port
 
 	def send_data(self, header, data, wait_for_confirmation = True, timeout = 30, validate_data = False):
 		keeptrying = True

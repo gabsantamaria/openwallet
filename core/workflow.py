@@ -102,11 +102,9 @@ def wait_for_connection():
 	me.com.connect()
 	#sc.connecting(me.loaded_wid)
 	if not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
-		try:
-			me.com.disconnect()
-			return False
-		except:
-			return False
+		me.com.disconnect()
+		print("Could not connect and get response, trying again")
+		return False
 	return True
 
 
