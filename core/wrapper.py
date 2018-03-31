@@ -145,15 +145,18 @@ def sign_transaction(unsigned_txn, wid, pwd = None, wdir = ""):
 	comm = " ".join(comm)
 	cat = subprocess.Popen(comm, shell=True, stdout=subprocess.PIPE).communicate()
 
-	timeout = 10
+	timeout = 60*5
 	while (load(sgn_path) == None) and (timeout>0):
-		time.sleep(0.1)
-		timeout = timeout - 0.1
+		time.sleep(1)
+		timeout = timeout - 1
 
-	if timeout > 0:
-		return load(sgn_path)
-	else:
+	if timeout < 0:
 		return -1
+	signed_file = load(sgn_path)
+	if signed_file.find("hex") == -1: #unexpected error
+		return -1
+	else:
+		return signed_file[signed_file.find("hex"):].replace("\n","").replace("}","").replace("\"","").replace(" ","").replace("hex:","")
 
 def hex2json(hexdata):
 	if os.path.isfile(hexdata):

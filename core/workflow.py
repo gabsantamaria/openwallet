@@ -3,6 +3,7 @@ import wallet_subs as sub
 import wrapper as core
 from commusb import comm
 import time
+import random
 
 class Me:
 	pass
@@ -57,11 +58,26 @@ def wait_for_connection():
 		print("Invalid txn. Recall foreign inputs and multiple payees are not allowed")
 		sc.invalid_transaction(me.loaded_wid)
 		return False
-	sc.transaction_info(payees[0], amount, me.loaded_wid)
-	time.sleep(10)
-	sc.scrambled_numpad([0,1,2,3,4,5,6,7,8,9])
-	time.sleep(50)
-	return 0
-
-def exchange_data():
-	return 0
+	if not sc.transaction_info(payees[0], amount, me.loaded_wid): #rejected
+		return False
+	signed_txn = -1
+	trials_left = 3
+	while signed_txn == -1 and trials_left > 0
+		scrambled = random.shuffle([0,1,2,3,4,5,6,7,8,9])
+		sc.scrambled_numpad(scrambled)
+		retrieved_pin = me.com.get_pin()
+		while retrieved_pin == "":
+			retrieved_pin = me.com.get_pin()
+			time.sleep(1)
+		if retrieved_pin == "cancel":
+			return False
+		pwd = ""
+		for digit in retrieved_pin:
+			pwd = pwd + scrambled[digit]
+		signed_txn = core.sign_transaction(unsigned_txn, me.loaded_wid, pwd)
+		trials_left -= 1
+	if signed_txn == -1
+		return False
+	if send_signed(signed_txn) == False:
+		return False
+	return True

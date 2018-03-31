@@ -129,7 +129,23 @@ def invalid_transaction(loaded_wid = ""):
 	clear_disp()
 	write_text("Invalid transaction", top + 16)
 	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
-	return 0
+	write_text("                 exit", top + 16 + 8)
+	action = listenAB()
+	while not listenAB() == "B":
+	
+	return True
+
+def listenAB():
+	try:
+		while 1:
+			if not GPIO.input(A_pin): # button [no] is pressed:
+				return "A"
+			if not GPIO.input(B_pin): # button [yes] is pressed:
+				return "B"
+	except KeyboardInterrupt: 
+		GPIO.cleanup()
+		return "err"
+
 
 def transaction_info(payee_addr, amount, loaded_wid = ""):
 	clear_disp()
@@ -138,10 +154,15 @@ def transaction_info(payee_addr, amount, loaded_wid = ""):
 	cut1 = len(addr)//2
 	write_text(addr[0:cut1], top + 8)
 	write_text(addr[cut1:], top + 16)
+	write_text("                  yes", top + 16 + 8)
 	write_text(str(int(str(amount))/100000) + " mBTC", top + 34)
-	write_text("Accept with PIN", top + 43)
 	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
-	return 0
+	write_text("                   no", top + 54)
+	action = listenAB()
+	if action == "B":
+		return True
+	else:
+		return False
 
 def scrambled_numpad(numbers):
 	clear_disp()
@@ -154,4 +175,3 @@ def scrambled_numpad(numbers):
 	write_text(line2, 4 + top + 16, True)
 	write_text(line3, 4 + top + 32, True)
 	write_text(line4, 4 + top + 48, True)
-	return 0
