@@ -54,6 +54,9 @@ def verify_transaction(unsigned_txn):
 	sc.verifying_transaction(me.loaded_wid)
 	txn_info = core.verify_transaction(unsigned_txn, me.loaded_wid)
 	print(txn_info)
+	if txn_info == None:
+		sc.invalid_transaction(me.loaded_wid)
+		return None
 	payees = txn_info['payees']
 	amount = txn_info['amount_no_fee']
 	foreign_inputs = txn_info['foreign_inputs']

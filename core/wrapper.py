@@ -172,30 +172,34 @@ def is_my_addr(addr, wid, wdir = ""):
 	return result
 
 def verify_transaction(unsigned_txn, wid, wdir = ""):
-	txn_json = hex2json(unsigned_txn)
-	#print(txn_json)
-	#txn_json = unsigned_txn
-	print("txn_json: ", txn_json)
-	txn = json.loads(txn_json)
-	print("txn: ", txn)
-	foreign_inputs = 0
-	payers = []
-	for inp in txn['inputs']:
-		addr = inp['address']
-		payers.append(addr)
-		if not is_my_addr(addr, wid, wdir):
-			foreign_inputs += 1
+	try:
+		txn_json = hex2json(unsigned_txn)
+		#print(txn_json)
+		#txn_json = unsigned_txn
+		print("txn_json: ", txn_json)
+		txn = json.loads(txn_json)
+		print("txn: ", txn)
 
-	payees = []
-	total = 0
-	back = 0			
-	for out in txn['outputs']:
-		addr = out['address']
-		total += out['value']
-		if is_my_addr(addr, wid, wdir):
-			back += out['value']
-		else:
-			payees.append(addr)
+		foreign_inputs = 0
+		payers = []
+		for inp in txn['inputs']:
+			addr = inp['address']
+			payers.append(addr)
+			if not is_my_addr(addr, wid, wdir):
+				foreign_inputs += 1
 
-	amount = total - back
-	return {"payees" : payees, "amount_no_fee": amount, "foreign_inputs": foreign_inputs, "total_out": total, "payers" : payers}
+		payees = []
+		total = 0
+		back = 0			
+		for out in txn['outputs']:
+			addr = out['address']
+			total += out['value']
+			if is_my_addr(addr, wid, wdir):
+				back += out['value']
+			else:
+				payees.append(addr)
+
+		amount = total - back
+		return {"payees" : payees, "amount_no_fee": amount, "foreign_inputs": foreign_inputs, "total_out": total, "payers" : payers}
+	except:
+		return None
