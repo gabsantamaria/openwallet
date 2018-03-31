@@ -76,7 +76,7 @@ def wait_for_connection():
 			return False
 		pwd = ""
 		for digit in retrieved_pin:
-			pwd = pwd + scrambled[digit]
+			pwd = pwd + scrambled[int(digit)]
 		signed_txn = core.sign_transaction(unsigned_txn, me.loaded_wid, pwd)
 		trials_left -= 1
 	if signed_txn == -1:
