@@ -175,8 +175,9 @@ def verify_transaction(unsigned_txn, wid, wdir = ""):
 	txn_json = hex2json(unsigned_txn)
 	#print(txn_json)
 	#txn_json = unsigned_txn
+	print("txn_json: ", txn_json)
 	txn = json.loads(txn_json)
-
+	print("txn: ", txn)
 	foreign_inputs = 0
 	payers = []
 	for inp in txn['inputs']:
