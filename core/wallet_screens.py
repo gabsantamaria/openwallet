@@ -96,7 +96,7 @@ def new_wallet(seed):
 def indicate_wloaded(loaded_wid = ""):
 	if loaded_wid == "":
 		return 0
-	draw.line(0, 64-9, 15, 64-9)
+	draw.line([0, 64-9, 15, 64-9])
 	write_text("W" + str(loaded_wid), 64-8)
 	return 0
 
