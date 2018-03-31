@@ -62,7 +62,7 @@ def wait_for_connection():
 		return False
 	signed_txn = -1
 	trials_left = 3
-	while signed_txn == -1 and trials_left > 0
+	while signed_txn == -1 and trials_left > 0:
 		scrambled = random.shuffle([0,1,2,3,4,5,6,7,8,9])
 		sc.scrambled_numpad(scrambled)
 		retrieved_pin = me.com.get_pin()
@@ -76,7 +76,7 @@ def wait_for_connection():
 			pwd = pwd + scrambled[digit]
 		signed_txn = core.sign_transaction(unsigned_txn, me.loaded_wid, pwd)
 		trials_left -= 1
-	if signed_txn == -1
+	if signed_txn == -1:
 		return False
 	if send_signed(signed_txn) == False:
 		return False
