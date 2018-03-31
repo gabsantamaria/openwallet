@@ -93,17 +93,26 @@ def initializing():
 def new_wallet(seed):
 	return 0
 
+def indicate_wloaded(loaded_wid = "")
+	if loaded_wid = ""
+		return 0
+	draw.line(0, 64-9, 15, 64-9, fill = 1)
+	write_text("W" + str(loaded_wid), 64-8)
+	return 0
+
 def waiting_connection(loaded_wid = ""):
 	clear_disp()
 	write_text("Waiting for USB", top + 16)
 	write_text("connection...", top + 25)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	return 0
 
 def connecting(loaded_wid = ""):
 	clear_disp()
 	write_text("connecting...", top + 16)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	return 0
 
 def waiting_transaction(loaded_wid = ""):
@@ -111,7 +120,8 @@ def waiting_transaction(loaded_wid = ""):
 	write_text("Connected", top)
 	write_text("Waiting for", top + 16)
 	write_text("transaction...", top + 25)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	return 0
 
 def input_pin():
@@ -122,13 +132,15 @@ def verifying_transaction(loaded_wid = ""):
 	write_text("Transaction received", top)
 	write_text("Verifying...", top + 16)
 	write_text("Please wait...", top + 25)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	return 0
 
 def invalid_transaction(loaded_wid = ""):
 	clear_disp()
 	write_text("Invalid transaction", top + 16)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	write_text("                 exit", top + 16 + 8)
 	action = listenAB()
 	while not listenAB() == "B":
@@ -156,7 +168,8 @@ def transaction_info(payee_addr, amount, loaded_wid = ""):
 	write_text(addr[cut1:], top + 16)
 	write_text("                  yes", top + 16 + 8)
 	write_text(str(int(str(amount))/100000) + " mBTC", top + 34)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
 	write_text("                   no", top + 54)
 	action = listenAB()
 	if action == "B":
@@ -181,4 +194,5 @@ def signing(loaded_wid):
 	clear_disp()
 	write_text("Signing transaction", top)
 	write_text("Please wait...", top + 25)
-	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+	indicate_wloaded(loaded_wid)
