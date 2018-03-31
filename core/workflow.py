@@ -31,21 +31,26 @@ def turn_on():
 def wait_for_action():
 	#TODO wait also for actions like creating or deleting wallets
 	while True:
-		wait_for_connection()
+		if wait_for_connection():
+			unsigned_txn = wait_for_transaction()
+			if not unsigned_txn == None:
+				verified = verify_transaction(unsigned_txn)
+				if not verified == None:
+					signed_txn = wait_for_signing(unsigned_txn)
+					if not signed_txn == None:
+						print("Successful operation")
+					
 	return 0
 
-def wait_for_connection():
-	sc.waiting_connection(me.loaded_wid)
-	me.com.connect()
-	#sc.connecting(me.loaded_wid)
-	while not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
-		time.sleep(1)
+def wait_for_transaction():
 	sc.waiting_transaction(me.loaded_wid)
-
 	unsigned_txn = me.com.get_unsigned()
 	while unsigned_txn == "":
 		time.sleep(1)
 		unsigned_txn = me.com.get_unsigned()
+	return unsigned_txn
+
+def verify_transaction(unsigned_txn):
 	sc.verifying_transaction(me.loaded_wid)
 	txn_info = core.verify_transaction(unsigned_txn, me.loaded_wid)
 	print(txn_info)
@@ -57,9 +62,14 @@ def wait_for_connection():
 	if foreign_inputs>0 or len(payees)>1:
 		print("Invalid txn. Recall foreign inputs and multiple payees are not allowed")
 		sc.invalid_transaction(me.loaded_wid)
-		return False
-	if not sc.transaction_info(payees[0], amount, me.loaded_wid): #rejected
-		return False
+		return None
+	else:
+		if sc.transaction_info(payees[0], amount, me.loaded_wid): #accepted
+			return {"payee":payees[0], "amount": amount, "txn_info": txn_info}
+		else:
+			return None
+
+def wait_for_signing(unsigned_txn):
 	signed_txn = -1
 	trials_left = 3
 	scrambled = [0,1,2,3,4,5,6,7,8,9]
@@ -73,7 +83,7 @@ def wait_for_connection():
 			retrieved_pin = me.com.get_pin()
 			time.sleep(1)
 		if retrieved_pin == "cancel":
-			return False
+			return None
 		sc.signing(me.loaded_wid)
 		pwd = ""
 		for digit in retrieved_pin:
@@ -81,7 +91,20 @@ def wait_for_connection():
 		signed_txn = core.sign_transaction(unsigned_txn, me.loaded_wid, pwd)
 		trials_left -= 1
 	if signed_txn == -1:
-		return False
+		return None
 	if me.com.send_signed(signed_txn) == False:
-		return False
+		print("Signed successfully, but no response from USB after sending")
+		return None
+	return signed_txn
+
+def wait_for_connection():
+	sc.waiting_connection(me.loaded_wid)
+	me.com.connect()
+	#sc.connecting(me.loaded_wid)
+	while not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
+		time.sleep(1)
 	return True
+
+
+
+

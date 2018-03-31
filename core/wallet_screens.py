@@ -93,7 +93,7 @@ def initializing():
 def new_wallet(seed):
 	return 0
 
-def indicate_wloaded(loaded_wid = "")
+def indicate_wloaded(loaded_wid = ""):
 	if loaded_wid = ""
 		return 0
 	draw.line(0, 64-9, 15, 64-9, fill = 1)
