@@ -101,8 +101,12 @@ def wait_for_connection():
 	sc.waiting_connection(me.loaded_wid)
 	me.com.connect()
 	#sc.connecting(me.loaded_wid)
-	while not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
-		time.sleep(1)
+	if not me.com.send_xpub(me.loaded_xpub, me.loaded_wid, me.devid):
+		try:
+			me.com.disconnect()
+			return False
+		except:
+			return False
 	return True
 
 
