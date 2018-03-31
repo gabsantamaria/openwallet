@@ -176,3 +176,9 @@ def scrambled_numpad(numbers):
 	write_text(line2, 4 + top + 16, True)
 	write_text(line3, 4 + top + 32, True)
 	write_text(line4, 4 + top + 48, True)
+
+def signing(loaded_wid):
+	clear_disp()
+	write_text("Signing transaction", top)
+	write_text("Please wait...", top + 25)
+	write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)

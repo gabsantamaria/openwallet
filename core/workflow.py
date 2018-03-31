@@ -74,6 +74,7 @@ def wait_for_connection():
 			time.sleep(1)
 		if retrieved_pin == "cancel":
 			return False
+		sc.signing(me.loaded_wid)
 		pwd = ""
 		for digit in retrieved_pin:
 			pwd = pwd + str(scrambled[int(digit)])
@@ -81,6 +82,6 @@ def wait_for_connection():
 		trials_left -= 1
 	if signed_txn == -1:
 		return False
-	if send_signed(signed_txn) == False:
+	if me.com.send_signed(signed_txn) == False:
 		return False
 	return True
