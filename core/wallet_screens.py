@@ -1,88 +1,100 @@
-import RPi.GPIO as GPIO
+try:
+	import RPi.GPIO as GPIO
 
-import time
+	import time
 
-import Adafruit_GPIO.SPI as SPI
-import Adafruit_SSD1306
+	import Adafruit_GPIO.SPI as SPI
+	import Adafruit_SSD1306
 
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+	from PIL import Image
+	from PIL import ImageDraw
+	from PIL import ImageFont
 
-# Input pins:
-L_pin = 27 
-R_pin = 23 
-C_pin = 4 
-U_pin = 17 
-D_pin = 22 
+	# Input pins:
+	L_pin = 27 
+	R_pin = 23 
+	C_pin = 4 
+	U_pin = 17 
+	D_pin = 22 
 
-A_pin = 5 
-B_pin = 6 
+	A_pin = 5 
+	B_pin = 6 
 
-RST = 24
-DC = 23
-SPI_PORT = 0
-SPI_DEVICE = 0
-disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
+	RST = 24
+	DC = 23
+	SPI_PORT = 0
+	SPI_DEVICE = 0
+	disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
 
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
-width = disp.width
-height = disp.height
+	# Create blank image for drawing.
+	# Make sure to create image with mode '1' for 1-bit color.
+	width = disp.width
+	height = disp.height
 
-# Get drawing object to draw on image.
-image = Image.new('1', (width, height))
-draw = ImageDraw.Draw(image)
+	# Get drawing object to draw on image.
+	image = Image.new('1', (width, height))
+	draw = ImageDraw.Draw(image)
 
-# Load default font.
-font = ImageFont.load_default()
-fontnumpad = ImageFont.truetype('m04.ttf',8)
-# Draw some shapes.
-# First define some constants to allow easy resizing of shapes.
-padding = -2
-top = padding
-bottom = height-padding
-# Move left to right keeping track of the current x position for drawing shapes.
-x = 0
+	# Load default font.
+	font = ImageFont.load_default()
+	fontnumpad = ImageFont.truetype('m04.ttf',8)
+	# Draw some shapes.
+	# First define some constants to allow easy resizing of shapes.
+	padding = -2
+	top = padding
+	bottom = height-padding
+	# Move left to right keeping track of the current x position for drawing shapes.
+	x = 0
+except Exception:
+	print ("There was an error in screens module")
 
 def clear_disp():
-	draw.rectangle((0,0,width,height), outline=0, fill=0)
-	disp.image(image)
-	disp.display()
+	try:
+		draw.rectangle((0,0,width,height), outline=0, fill=0)
+		disp.image(image)
+		disp.display()
+	except Exception:
+		print ("There was an error in screens module")
 	return 0
 
 def initialize():
-	GPIO.setmode(GPIO.BCM) 
-	GPIO.setup(A_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(B_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(L_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(R_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(U_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(D_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	GPIO.setup(C_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
-	# Initialize library.
-	disp.begin()
+	try:
+		GPIO.setmode(GPIO.BCM) 
+		GPIO.setup(A_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(B_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(L_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(R_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(U_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(D_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		GPIO.setup(C_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Input with pull-up
+		# Initialize library.
+		disp.begin()
 
-	# Clear display.
-	disp.clear()
-	disp.display()
+		# Clear display.
+		disp.clear()
+		disp.display()
 
-	# Draw a black filled box to clear the image.
-	draw.rectangle((0,0,width,height), outline=0, fill=0)
+		# Draw a black filled box to clear the image.
+		draw.rectangle((0,0,width,height), outline=0, fill=0)
 
-	# Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
-	# Some other nice fonts to try: http://www.dafont.com/bitmap.php
-	# font = ImageFont.truetype('Minecraftia.ttf', 8)
+		# Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
+		# Some other nice fonts to try: http://www.dafont.com/bitmap.php
+		# font = ImageFont.truetype('Minecraftia.ttf', 8)
+	except Exception:
+		print ("There was an error in screens module")
 	return 0
 
 def write_text(text, yval=top, npad = False, xval=x):
-	if npad:
-		thefont = fontnumpad
-	else:
-		thefont = font
-	draw.text((xval, yval), str(text), font=thefont, fill=255)
-	disp.image(image)
-	disp.display()
+	try:
+		if npad:
+			thefont = fontnumpad
+		else:
+			thefont = font
+		draw.text((xval, yval), str(text), font=thefont, fill=255)
+		disp.image(image)
+		disp.display()
+	except Exception:
+		print ("There was an error in screens module")
 
 def initializing():
 	clear_disp()
@@ -94,12 +106,15 @@ def new_wallet(seed):
 	return 0
 
 def indicate_wloaded(loaded_wid = ""):
-	if loaded_wid == "":
-		return 0
-	draw.line([0, 64-9-2, 16, 64-9-2], fill=1)
-	disp.image(image)
-	disp.display()
-	write_text("W" + str(loaded_wid), 64-8-1)
+	try:
+		if loaded_wid == "":
+			return 0
+		draw.line([0, 64-9-2, 16, 64-9-2], fill=1)
+		disp.image(image)
+		disp.display()
+		write_text("W" + str(loaded_wid), 64-8-1)
+	except Exception:
+		print ("There was an error in screens module")
 	return 0
 
 def waiting_connection(loaded_wid = ""):
@@ -151,14 +166,17 @@ def invalid_transaction(loaded_wid = ""):
 
 def listenAB():
 	try:
-		while 1:
-			if not GPIO.input(A_pin): # button [no] is pressed:
-				return "A"
-			if not GPIO.input(B_pin): # button [yes] is pressed:
-				return "B"
-	except KeyboardInterrupt: 
-		GPIO.cleanup()
-		return "err"
+		try:
+			while 1:
+				if not GPIO.input(A_pin): # button [no] is pressed:
+					return "A"
+				if not GPIO.input(B_pin): # button [yes] is pressed:
+					return "B"
+		except KeyboardInterrupt: 
+			GPIO.cleanup()
+			return "err"
+	except Exception:
+		print ("There was an error in screens module")
 
 
 def transaction_info(payee_addr, amount, loaded_wid = ""):
