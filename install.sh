@@ -40,4 +40,10 @@ echo "[Install]" >> openwallet.service
 echo "WantedBy=multi-user.target" >> openwallet.service
 sudo cp openwallet.service /lib/systemd/system/openwallet.service
 sudo systemctl enable openwallet.service
+cd electrum_fork
+export PATH=$PATH:$(pwd)
+cd /usr/bin
+sudo ln -s $(pwd)/elefork
+source ~/.profile
+source ~/.bashrc
 echo "Installation finished"
