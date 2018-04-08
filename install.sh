@@ -18,9 +18,9 @@ echo "[Press enter to open wizard and continue]"
 read "[Press enter to continue]"
 sudo raspi-config
 #enable i2c!
-"dtoverlay=dwc2" | sudo tee -a /boot/config.txt
+echo "dtoverlay=dwc2" | sudo tee -a /boot/config.txt
 echo "dwc2" | sudo tee -a /etc/modules
-"g_serial" | sudo tee -a /etc/modules
+echo "g_serial" | sudo tee -a /etc/modules
 sudo modprobe g_serial
 cd core
 chmod +x startup.py
