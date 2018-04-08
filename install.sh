@@ -5,6 +5,7 @@ cd dep
 sudo pip3 install Electrum-3.1.2.tar.gz
 sudo pip3 install RPi.GPIO-0.6.3.tar.gz
 sudo pip install RPi.GPIO-0.6.3.tar.gz
+python3 -m pip install pyserial-3.4.tar.gz
 cd Adafruit_Python_SSD1306-master
 sudo python3 setup.py install
 cd ..
