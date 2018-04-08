@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo apt-get -y install python3-setuptools python3-pyqt5 python3-pip
 sudo apt-get -y install build-essential python-dev python-pip
 sudo apt-get -y install python-imaging python-smbus
@@ -41,9 +42,11 @@ echo "WantedBy=multi-user.target" >> openwallet.service
 sudo cp openwallet.service /lib/systemd/system/openwallet.service
 sudo systemctl enable openwallet.service
 cd electrum_fork
-export PATH=$PATH:$(pwd)
+SPTH=$(pwd)
+export PATH=$PATH:"$SPTH"
 cd /usr/bin
-sudo ln -s $(pwd)/elefork
+sudo ln -s "$SPTH"/elefork
+cd ~
 source ~/.profile
 source ~/.bashrc
 echo "Installation finished"
