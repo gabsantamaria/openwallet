@@ -23,13 +23,16 @@ def turn_on():
 		sub.create_new_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
+	write_text("loaded: ", + str(me.loaded_wid), 35)
 	me.loaded_xpub = core.get_mpk(me.loaded_wid)
+	write_text("xpub: ", + str(me.loaded_xpub), 45)
 	wait_for_action()
 	sub.shut_down()
 	return 0
 
 def wait_for_action():
 	#TODO wait also for actions like creating or deleting wallets
+	write_text("entered: ", 55)
 	while True:
 		if wait_for_connection():
 			unsigned_txn = wait_for_transaction()
