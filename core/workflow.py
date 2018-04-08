@@ -18,15 +18,15 @@ def turn_on():
 	sc.initialize()
 	sc.initializing()
 	sub.init_on_firsttime()
-	sc.write_text("                  cool ", + str(me.loaded_wid), 54)
+	sc.write_text("             cool", 54)
 	while core.get_num_wids() == 0:
 		#no wallets created
 		sub.create_new_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
-	sc.write_text("loaded: ", + str(me.loaded_wid), 35)
+	sc.write_text("loaded: " + str(me.loaded_wid), 35)
 	me.loaded_xpub = core.get_mpk(me.loaded_wid)
-	sc.write_text("xpub: ", + str(me.loaded_xpub), 45)
+	sc.write_text("xpub: " + str(me.loaded_xpub), 45)
 	wait_for_action()
 	sub.shut_down()
 	return 0
