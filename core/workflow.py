@@ -41,8 +41,6 @@ def turn_on():
 	sub.shut_down()
 	return 0
 
-def startup_and_wait():
-
 
 def no_wallet():
 	sc.creating()
