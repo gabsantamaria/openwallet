@@ -45,7 +45,7 @@ def no_wallet():
 			free_wid = core.get_free_wid()
 			sc.saving_wallet(free_wid)
 			core.create_from_seed(new_seed, free_wid, pin)
-			sc.saved_wallet(wid)
+			sc.saved_wallet(free_wid)
 			return True
 		else:
 			return False
