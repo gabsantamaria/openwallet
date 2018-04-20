@@ -93,12 +93,17 @@ def verify_transaction(unsigned_txn):
 	if txn_info == None:
 		sc.invalid_transaction(me.loaded_wid)
 		return None
-	payees = txn_info['payees']
-	amount = txn_info['amount_no_fee']
-	foreign_inputs = txn_info['foreign_inputs']
-	total_out = txn_info['total_out']
-	payers = txn_info['payers']
-	if foreign_inputs>0 or len(payees)>1:
+	isinvalid = False
+	try:
+		payees = txn_info['payees']
+		amount = txn_info['amount_no_fee']
+		foreign_inputs = txn_info['foreign_inputs']
+		total_out = txn_info['total_out']
+		payers = txn_info['payers']
+	except:
+		isinvalid = True
+
+	if foreign_inputs>0 or len(payees)>1 or isinvalid:
 		print("Invalid txn. Recall foreign inputs and multiple payees are not allowed")
 		sc.invalid_transaction(me.loaded_wid)
 		return None
