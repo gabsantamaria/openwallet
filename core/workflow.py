@@ -39,7 +39,7 @@ def turn_on():
 			return 0
 		#sc.write_text("xpub: " + str(me.loaded_xpub), 45)
 		wait_for_action()
-		sub.shut_down()
+		#sub.shut_down()
 		return 0
 
 
