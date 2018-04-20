@@ -179,7 +179,7 @@ def get_addresses(wid, wdir = ""):
 
 def deactivate_wallet(wid, wdir = ""):
 	tail = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
-	os.rename(get_full_wpath(wid, wdir, True) + "/_deleted" + wid + "_" + tail)
+	os.rename(get_full_wpath(wid, wdir, True) + "/_deleted" + str(wid) + "_" + tail)
 
 
 def verify_transaction(unsigned_txn, wid, wdir = ""):
