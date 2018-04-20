@@ -21,7 +21,7 @@ def turn_on():
 	#sc.write_text("             cool", 54)
 	while core.get_num_wids() == 0:
 		#no wallets created
-		sub.create_new_wallet()
+		no_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
 	#sc.write_text("loaded: " + str(me.loaded_wid), 35)
@@ -30,6 +30,22 @@ def turn_on():
 	wait_for_action()
 	sub.shut_down()
 	return 0
+
+def no_wallet():
+	sc.creating()
+	new_seed = core.create_seed()
+	if new_seed == "":
+		return False
+	else:
+		if sc.show_seed(new_seed):
+			pin = sc.chose_pin()
+			if pin == False:
+				return False
+			free_wid = core.get_free_wid()
+			create_from_seed(new_seed, free_wid, pin)
+		else:
+			return False
+
 
 def wait_for_action():
 	#TODO wait also for actions like creating or deleting wallets

@@ -216,3 +216,67 @@ def signing(loaded_wid):
 	write_text("Please wait...", top + 25)
 	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	indicate_wloaded(loaded_wid)
+
+
+def creating():
+	clear_disp()
+	write_text("Creating new wallet", top)
+	write_text("Generating seed...", top + 25)
+	write_text("Please wait...", top + 35)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+
+def show_seed(seed):
+	words = seed.split()
+	it = 0
+	while (True):
+		word = word[it]
+		clear_disp()
+		write_text("STORE THESE", top)
+		write_text("WORDS SECURELY", top + 10)
+		write_text(" -> " + str(word) + " <-", top + 35)
+		if it >= len(words) - 1:
+			wnext = " end"
+		else:
+			wnext = "next"
+		if it <= 0:
+			wprev = "abort"
+		else:
+			wprev = " prev"
+		write_text("                 " + wnext, top + 16 + 8)
+		write_text("                " + wprev, top + 54)
+		act = listenAB()
+		if act == "A": #next
+			if it >= len(words) - 1:
+				return True
+			it = it + 1
+		else: #prev
+			if it <= 0:
+				return False
+			else:
+				it = it - 1
+
+def chose_pin():
+	current = ""
+	it = 0
+	options = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "reset", "cancel", "accept"]
+	while (True):
+		clear_disp()
+		write_text("Choose pin", top)
+		write_text("-> " + current + " <-", top + 10)
+		write_text("                 " + "next", top + 16 + 8)
+		write_text("                  " + "sel", top + 54)
+		write_text("Choose: " + options[it], top + 35)
+		act = listenAB()
+		if act == "A": #next
+			if it >= len(options) - 1:
+				it = 0
+			else:
+				it = it + 1
+		else: #select
+			if it == 10:
+				current = ""
+			elif it == 11:
+				return False
+			elif it == 12:
+				return current
+			else:
