@@ -169,8 +169,12 @@ def listenAB():
 		try:
 			while 1:
 				if not GPIO.input(A_pin): # button [no] is pressed:
+					while not GPIO.input(A_pin):
+						pass
 					return "A"
 				if not GPIO.input(B_pin): # button [yes] is pressed:
+					while not GPIO.input(B_pin):
+						pass
 					return "B"
 		except KeyboardInterrupt: 
 			GPIO.cleanup()
@@ -229,7 +233,7 @@ def show_seed(seed):
 	words = seed.split()
 	it = 0
 	while (True):
-		word = word[it]
+		word = words[it]
 		clear_disp()
 		write_text("STORE THESE", top)
 		write_text("WORDS SECURELY", top + 10)
@@ -244,7 +248,10 @@ def show_seed(seed):
 			wprev = " prev"
 		write_text("                 " + wnext, top + 16 + 8)
 		write_text("                " + wprev, top + 54)
+		print("waiting for action...")
 		act = listenAB()
+		print("it = ", it)
+		print("len(words) = ", len(words))
 		if act == "A": #next
 			if it >= len(words) - 1:
 				return True
