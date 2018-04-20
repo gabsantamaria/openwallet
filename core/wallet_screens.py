@@ -252,7 +252,7 @@ def show_seed(seed):
 		act = listenAB()
 		print("it = ", it)
 		print("len(words) = ", len(words))
-		if act == "A": #next
+		if act == "B": #next
 			if it >= len(words) - 1:
 				return True
 			it = it + 1
@@ -274,7 +274,7 @@ def chose_pin():
 		write_text("                  " + "sel", top + 54)
 		write_text("Choose: " + options[it], top + 35)
 		act = listenAB()
-		if act == "A": #next
+		if act == "B": #next
 			if it >= len(options) - 1:
 				it = 0
 			else:
