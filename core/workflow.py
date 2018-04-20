@@ -21,6 +21,7 @@ def turn_on():
 	#sc.write_text("             cool", 54)
 	while core.get_num_wids() == 0:
 		#no wallets created
+		print("core.get_num_wids()", core.get_num_wids())
 		no_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
