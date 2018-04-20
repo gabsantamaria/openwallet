@@ -31,15 +31,16 @@ def turn_on():
 	me.loaded_xpub = core.get_mpk(me.loaded_wid)
 	addr_info = core.get_addresses(me.loaded_wid)
 	addr_info = addr_info[0]
-	act = sc.main_screen(addr_info, me.loaded_wid)
-	if act == "delete":
-		core.deactivate_wallet(me.loaded_wid)
-		turn_on()
+	while True:
+		act = sc.main_screen(addr_info, me.loaded_wid)
+		if act == "delete":
+			core.deactivate_wallet(me.loaded_wid)
+			turn_on()
+			return 0
+		#sc.write_text("xpub: " + str(me.loaded_xpub), 45)
+		wait_for_action()
+		sub.shut_down()
 		return 0
-	#sc.write_text("xpub: " + str(me.loaded_xpub), 45)
-	wait_for_action()
-	sub.shut_down()
-	return 0
 
 
 def no_wallet():
@@ -64,7 +65,8 @@ def no_wallet():
 def wait_for_action():
 	#TODO wait also for actions like creating or deleting wallets
 	#sc.write_text("entered: ", 55)
-	while True:
+	trials = 3
+	while trials > 0:
 		if wait_for_connection():
 			unsigned_txn = wait_for_transaction()
 			if not unsigned_txn == None:
@@ -73,8 +75,8 @@ def wait_for_action():
 					signed_txn = wait_for_signing(unsigned_txn)
 					if not signed_txn == None:
 						print("Successful operation")
-					
-	return 0
+		trials = trials - 1
+		return 0		
 
 def wait_for_transaction():
 	sc.waiting_transaction(me.loaded_wid)
