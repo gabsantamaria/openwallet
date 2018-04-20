@@ -32,7 +32,7 @@ def turn_on():
 	addr_info = core.get_addresses(me.loaded_wid)
 	addr_info = addr_info[0]
 	act = sc.main_screen(addr_info, me.loaded_wid)
-	if act == "delete"
+	if act == "delete":
 		core.deactivate_wallet(me.loaded_wid)
 		turn_on()
 		return 0
