@@ -328,7 +328,7 @@ def main_screen(addr_info, loaded_wid):
 	print_at("B", "Connect")
 	print_at("A", "Delete wallet")
 	indicate_wloaded(loaded_wid)
-	if listenAB() == "A"
+	if listenAB() == "A":
 		return "delete"
 	else:
 		return "connect"
