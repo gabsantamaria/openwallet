@@ -20,7 +20,7 @@ from electrum import SimpleConfig, Network
 
 
 Config = namedtuple('Config', 'binary_cmd, default_wdir, max_wid')
-conf = Config("elefork", str(Path(os.getcwd()).parents[1]), 100)
+conf = Config("elefork", str(Path(os.getcwd()).parents[1]), 10)
 
 # def sign(wid, wdir = ""):
 # 	tx = """{
