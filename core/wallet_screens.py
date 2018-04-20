@@ -244,6 +244,12 @@ def saved_wallet(wid):
 	act = listenAB()
 	return True
 
+def loading_wallet():
+	clear_disp()
+	write_text("Loading wallet", top)
+	write_text("Please wait...", top+10)
+	return True
+
 def show_seed(seed):
 	words = seed.split()
 	it = 0
@@ -305,3 +311,24 @@ def chose_pin():
 			else:
 				current = current + options[it]
 
+def print_at(button, text):
+	toprint = " "*(21-len(text)) + text
+	if button == "B":
+		write_text(toprint, top + 16 + 8)
+	else:
+		write_text(toprint, top + 54)
+
+def main_screen(addr_info, loaded_wid):
+	clear_disp()
+	write_text("Receive at:", top)
+	addr = str(addr_info)
+	cut1 = len(addr)//2
+	write_text(addr[0:cut1], top + 8)
+	write_text(addr[cut1:], top + 16)
+	print_at("B", "Connect")
+	print_at("A", "Delete wallet")
+	indicate_wloaded(loaded_wid)
+	if listenAB() == "A"
+		return "delete"
+	else:
+		return "connect"

@@ -7,7 +7,9 @@ from collections import namedtuple
 from pathlib import Path
 import time
 import json
-
+import os
+import random
+import string
 #sys.path.append("/usr/local/lib/python3.6/dist-packages/electrum")
 
 from electrum.wallet import Wallet, Imported_Wallet
@@ -170,6 +172,15 @@ def is_my_addr(addr, wid, wdir = ""):
 	res = run(['elefork', 'ismine', '-w', get_full_wpath(wid, wdir), addr]).stdout.decode("utf-8").replace("\n","")
 	result = True if res.lower() == "True".lower() else False
 	return result
+
+def get_addresses(wid, wdir = ""):
+	res = run(['elefork', 'listaddresses', '-w', get_full_wpath(wid, wdir)]).stdout.decode("utf-8").replace("\n","").replace("[","").replace("]","").replace("\"","").replace(" ","")
+	return res.split(",")
+
+def deactivate_wallet(wid, wdir = ""):
+	tail = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+	os.rename(get_full_wpath(wid, wdir, True) + "/_deleted" + wid + "_" + tail)
+
 
 def verify_transaction(unsigned_txn, wid, wdir = ""):
 	try:

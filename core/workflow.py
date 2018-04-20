@@ -4,6 +4,7 @@ import wrapper as core
 from commusb import comm
 import time
 import random
+import os
 
 class Me:
 	pass
@@ -23,14 +24,25 @@ def turn_on():
 		#no wallets created
 		print("core.get_num_wids()", core.get_num_wids())
 		no_wallet()
+	sc.loading_wallet()
 	wids = core.get_list_wid()
 	me.loaded_wid = wids[0]
 	#sc.write_text("loaded: " + str(me.loaded_wid), 35)
 	me.loaded_xpub = core.get_mpk(me.loaded_wid)
+	addr_info = core.get_addresses(me.loaded_wid)
+	addr_info = addr_info[0]
+	act = sc.main_screen(addr_info, me.loaded_wid)
+	if act == "delete"
+		core.deactivate_wallet(me.loaded_wid)
+		turn_on()
+		return 0
 	#sc.write_text("xpub: " + str(me.loaded_xpub), 45)
 	wait_for_action()
 	sub.shut_down()
 	return 0
+
+def startup_and_wait():
+
 
 def no_wallet():
 	sc.creating()
