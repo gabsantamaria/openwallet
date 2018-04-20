@@ -280,3 +280,4 @@ def chose_pin():
 			elif it == 12:
 				return current
 			else:
+				current = current + options[it]
