@@ -229,6 +229,21 @@ def creating():
 	write_text("Please wait...", top + 35)
 	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 
+def saving_wallet(wid):
+	clear_disp()
+	write_text("Saving new wallet", top)
+	write_text("as W" + str(wid), top)
+	write_text("Please wait...", top + 45)
+	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
+
+def saved_wallet(wid):
+	clear_disp()
+	write_text("Wallet successfully", top)
+	write_text("Created" + str(wid), top)
+	write_text("             continue", top + 54)
+	act = listenAB()
+	return True
+	
 def show_seed(seed):
 	words = seed.split()
 	it = 0
@@ -288,3 +303,4 @@ def chose_pin():
 				return current
 			else:
 				current = current + options[it]
+
