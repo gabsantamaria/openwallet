@@ -253,6 +253,7 @@ def show_seed(seed):
 		write_text("STORE THESE", top)
 		write_text("WORDS SECURELY", top + 10)
 		write_text(" -> " + str(word) + " <-", top + 35)
+		write_text("  " + str(it+1) + "/12" + " <-", top + 45)
 		if it >= len(words) - 1:
 			wnext = " end"
 		else:
