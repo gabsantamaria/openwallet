@@ -52,8 +52,8 @@ class comm:
 
 	def wait_data(self, header, timeout=30):
 		while timeout>=0:
-			#line = self.port.readline().decode("utf-8").replace("\n","")
-			line = self.ser_io.readline().decode("utf-8").replace("\n","")
+			line = self.port.readline().decode("utf-8").replace("\n","")
+			#line = self.ser_io.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			indx = line.find(":")
 			if indx >= 0 and line[0:indx]==header:
