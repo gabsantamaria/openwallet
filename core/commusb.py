@@ -63,8 +63,8 @@ class comm:
 	    
 	def wait_ok(self, timeout=30):
 		while timeout>=0:
-			#line = self.port.readline().decode("utf-8").replace("\n","")
-			line = self.ser_io.readline().decode("utf-8").replace("\n","")
+			line = self.port.readline().decode("utf-8").replace("\n","")
+			#line = self.ser_io.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			if line == "ok":
 				return True
