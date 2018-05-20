@@ -82,7 +82,7 @@ def wait_for_transaction():
 	sc.waiting_transaction(me.loaded_wid)
 	unsigned_txn = me.com.get_unsigned()
 	while unsigned_txn == "":
-		time.sleep(1)
+		time.sleep(0.1)
 		unsigned_txn = me.com.get_unsigned()
 	return unsigned_txn
 
@@ -125,7 +125,7 @@ def wait_for_signing(unsigned_txn):
 		retrieved_pin = me.com.get_pin()
 		while retrieved_pin == "":
 			retrieved_pin = me.com.get_pin()
-			time.sleep(1)
+			time.sleep(0.1)
 		if retrieved_pin == "cancel":
 			return None
 		sc.signing(me.loaded_wid)

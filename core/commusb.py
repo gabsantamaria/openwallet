@@ -1,4 +1,5 @@
 import serial
+import io
 import time
 #self.port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
@@ -10,6 +11,7 @@ class comm:
 	def connect(self):
 		try:
 			self.port = serial.Serial("/dev/ttyGS0", baudrate=9600, timeout=self.holdon)
+			self.ser_io = io.TextIOWrapper(io.BufferedRWPair(self.port, self.port, 1), newline = '\n', line_buffering = True)
 			return self.port
 		except serial.serialutil.SerialException:
 			try:
@@ -50,7 +52,8 @@ class comm:
 
 	def wait_data(self, header, timeout=30):
 		while timeout>=0:
-			line = self.port.readline().decode("utf-8").replace("\n","")
+			#line = self.port.readline().decode("utf-8").replace("\n","")
+			line = self.ser_io.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			indx = line.find(":")
 			if indx >= 0 and line[0:indx]==header:
@@ -60,7 +63,8 @@ class comm:
 	    
 	def wait_ok(self, timeout=30):
 		while timeout>=0:
-			line = self.port.readline().decode("utf-8").replace("\n","")
+			#line = self.port.readline().decode("utf-8").replace("\n","")
+			line = self.ser_io.readline().decode("utf-8").replace("\n","")
 			#print("Line read: ", line)
 			if line == "ok":
 				return True

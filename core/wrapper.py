@@ -22,7 +22,7 @@ from electrum import SimpleConfig, Network
 
 
 Config = namedtuple('Config', 'binary_cmd, default_wdir, max_wid')
-conf = Config("elefork", str(Path(os.getcwd()).parents[1]), 10)
+conf = Config("elefork", str(Path(os.getcwd()).parents[1]), 3)
 
 # def sign(wid, wdir = ""):
 # 	tx = """{
@@ -147,9 +147,9 @@ def sign_transaction(unsigned_txn, wid, pwd = None, wdir = ""):
 	comm = " ".join(comm)
 	cat = subprocess.Popen(comm, shell=True, stdout=subprocess.PIPE).communicate()
 
-	timeout = 60*5
+	timeout = 60*5*10
 	while (load(sgn_path) == None) and (timeout>0):
-		time.sleep(1)
+		time.sleep(0.1)
 		timeout = timeout - 1
 
 	if timeout < 0:
