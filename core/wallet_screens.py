@@ -169,7 +169,7 @@ def invalid_transaction(loaded_wid = ""):
 def shutdownall():
 	clear_disp()
 	write_text("Shutting down...", top)
-	write_text("Unplug in 10 sec", top + 25)
+	write_text("Unplug in 20 sec", top + 25)
 	call("sudo nohup shutdown -h now", shell=True)
 
 def listenAB():
