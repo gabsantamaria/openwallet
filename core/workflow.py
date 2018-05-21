@@ -38,7 +38,9 @@ def turn_on():
 			turn_on()
 			return 0
 		#sc.write_text("xpub: " + str(me.loaded_xpub), 45)
-		wait_for_action()
+		ret = wait_for_action()
+		if ret == "Exit":
+			continue
 		#sub.shut_down()
 		return 0
 
@@ -69,12 +71,16 @@ def wait_for_action():
 	while trials > 0:
 		if wait_for_connection():
 			unsigned_txn = wait_for_transaction()
+			if unsigned_txn == "Exit":
+				return "Exit"
 			if not unsigned_txn == None:
 				verified = verify_transaction(unsigned_txn)
 				if not verified == None:
 					signed_txn = wait_for_signing(unsigned_txn)
 					if not signed_txn == None:
 						print("Successful operation")
+		if sc.button_status() == "A":
+			return "Exit"
 		trials = trials - 1
 		return 0		
 
@@ -83,6 +89,8 @@ def wait_for_transaction():
 	unsigned_txn = me.com.get_unsigned()
 	while unsigned_txn == "":
 		time.sleep(0.1)
+		if sc.button_status() == "A":
+			return "Exit"
 		unsigned_txn = me.com.get_unsigned()
 	return unsigned_txn
 
@@ -126,6 +134,8 @@ def wait_for_signing(unsigned_txn):
 		while retrieved_pin == "":
 			retrieved_pin = me.com.get_pin()
 			time.sleep(0.1)
+			if sc.button_status() == "A":
+				return None
 		if retrieved_pin == "cancel":
 			return None
 		sc.signing(me.loaded_wid)
@@ -152,5 +162,5 @@ def wait_for_connection():
 	return True
 
 
-
+def do_buttonevents():
 

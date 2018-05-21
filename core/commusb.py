@@ -84,7 +84,7 @@ class comm:
 
 	def get_unsigned(self):
 		self.send_data("get", "unsigned", False)
-		return self.wait_data("unsigned")
+		return self.wait_data("unsigned", self.holdon)
 
 	def get_pin(self):
 		self.send_data("get", "pin", False)

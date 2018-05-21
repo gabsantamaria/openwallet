@@ -121,6 +121,7 @@ def waiting_connection(loaded_wid = ""):
 	clear_disp()
 	write_text("Waiting for USB", top + 16)
 	write_text("connection...", top + 25)
+	write_text("               " + "cancel", top + 54)
 	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	indicate_wloaded(loaded_wid)
 	return 0
@@ -137,6 +138,7 @@ def waiting_transaction(loaded_wid = ""):
 	write_text("Connected", top)
 	write_text("Waiting for", top + 16)
 	write_text("transaction...", top + 25)
+	write_text("               " + "cancel", top + 54)
 	#write_text("Wallet " + str(loaded_wid) + " loaded", top + 54)
 	indicate_wloaded(loaded_wid)
 	return 0
@@ -182,6 +184,13 @@ def listenAB():
 	except Exception:
 		print ("There was an error in screens module")
 
+def button_status():
+	stat = ""
+	if not GPIO.input(A_pin): # button [no] is pressed:
+		stat = stat + "A"
+	if not GPIO.input(B_pin): # button [yes] is pressed:
+		stat = stat + "B"
+	return stat
 
 def transaction_info(payee_addr, amount, loaded_wid = ""):
 	clear_disp()
@@ -213,6 +222,7 @@ def scrambled_numpad(numbers):
 	write_text(line2, 4 + top + 16, True)
 	write_text(line3, 4 + top + 32, True)
 	write_text(line4, 4 + top + 48, True)
+	write_text("               " + "cancel", top + 54)
 
 def signing(loaded_wid):
 	clear_disp()
