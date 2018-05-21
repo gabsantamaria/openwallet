@@ -9,7 +9,7 @@ try:
 	from PIL import Image
 	from PIL import ImageDraw
 	from PIL import ImageFont
-
+	from subprocess import call
 	# Input pins:
 	L_pin = 27 
 	R_pin = 23 
@@ -166,10 +166,25 @@ def invalid_transaction(loaded_wid = ""):
 		pass
 	return True
 
+def shutdownall():
+	clear_disp()
+	write_text("Shutting down...", top)
+	write_text("Unplug in 10 sec", top + 25)
+	call("sudo nohup shutdown -h now", shell=True)
+
 def listenAB():
+	
 	try:
 		try:
 			while 1:
+				turnoffcount = 0
+				if not GPIO.input(C_pin): # button [CENTER] is pressed:
+					while not GPIO.input(C_pin):
+						turnoffcount = turnoffcount + 1
+						if turnoffcount > 4:
+							shutdownall()
+						time.sleep(1)
+
 				if not GPIO.input(A_pin): # button [no] is pressed:
 					while not GPIO.input(A_pin):
 						pass
