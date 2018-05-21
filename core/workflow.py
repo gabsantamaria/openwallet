@@ -160,7 +160,3 @@ def wait_for_connection():
 		print("Could not connect and get response, trying again")
 		return False
 	return True
-
-
-def do_buttonevents():
-
