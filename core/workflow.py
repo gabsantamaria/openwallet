@@ -113,6 +113,9 @@ def verify_transaction(unsigned_txn):
 
 	if foreign_inputs>0 or len(payees)>1 or isinvalid:
 		print("Invalid txn. Recall foreign inputs and multiple payees are not allowed")
+		print("foreign_inputs ", foreign_inputs)
+		print("len(payees) ", len(payees))
+		print("isinvalid ", isinvalid)
 		sc.invalid_transaction(me.loaded_wid)
 		return None
 	else:
